@@ -15,7 +15,7 @@ A aplicação deve conter funcionalidades basicas de criação e atualização d
 ### Este projeto foi desenvolvido com:
 
 <ul>
-  <li><a href="https://nodejs.org/en/">Node.js</a></li>
+  <li><a href="https://nodejs.org/en/">Node</a></li>
   <li><a href="https://legacy.yarnpkg.com/">Yarn</a></li>
   <li><a href="https://expressjs.com">Express</a></li>
   <li><a href="https://nodemon.io/">Nodemon</a></li>
