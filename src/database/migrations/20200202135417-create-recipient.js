@@ -19,7 +19,7 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
-            additional_information: {
+            complement: {
                 type: Sequelize.STRING,
             },
             state: {
@@ -30,7 +30,7 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            postal_code: {
+            zip_code: {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
