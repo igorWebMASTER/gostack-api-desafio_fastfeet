@@ -76,53 +76,58 @@ class RecipientController {
         if (!recipient) {
             return res.status(400).json({ error: 'Recipient not found' })
         }
-        const { street, number, state, city, zip_code } = req.body
-        const street_check = street || recipient.street
-        const number_check = number || recipient.number
-        const state_check = state || recipient.state
-        const city_check = city || recipient.city
-        const zip_code_check = zip_code || recipient.zip_code
-        if (street || number || state || city || zip_code) {
+        // const { street, number, state, city, zip_code } = req.body
+        // const street_check = street || recipient.street
+        // const number_check = number || recipient.number
+        // const state_check = state || recipient.state
+        // const city_check = city || recipient.city
+        // const zip_code_check = zip_code || recipient.zip_code
+        if (
+            req.body.street ||
+            req.body.number ||
+            req.body.state ||
+            req.body.city ||
+            req.body.zip_code
+        ) {
             const RecipientExists = await Recipients.findOne({
                 where: {
-                    street: street_check,
-                    number: number_check,
-                    state: state_check,
-                    city: city_check,
-                    zip_code: zip_code_check,
+                    street: req.body.street || recipient.street,
+                    number: req.body.number || recipient.number,
+                    state: req.body.state || recipient.state,
+                    city: req.body.city || recipient.city,
+                    zip_code: req.body.zip_code || recipient.zip_code,
                 },
             })
-            if (RecipientExists) {
+            if (RecipientExists && id != RecipientExists.id) {
                 return res.status(401).json({
-                    error: `Recipient already exists as id ${RecipientExists.id}`,
+                    error: `Recipient already exists as ID ${RecipientExists.id}`,
                 })
             }
         }
-        const { name, complement } = await recipient.update(req.body)
+        const {
+            name,
+            street,
+            number,
+            complement,
+            state,
+            city,
+            zip_code,
+        } = await recipient.update(req.body)
         return res.json({
             id,
             name,
-            street_check,
-            number_check,
+            street,
+            number,
             complement,
-            state_check,
-            city_check,
-            zip_code_check,
+            state,
+            city,
+            zip_code,
         })
     }
 
-    async showAll(req, res) {
+    async index(req, res) {
         const recipients = await Recipients.findAll()
         res.json(recipients)
-    }
-
-    async showOne(req, res) {
-        const { id } = req.params
-        const recipient = await Recipients.findByPk(id)
-        if (!recipient) {
-            return res.status(400).json({ error: 'Recipient not found' })
-        }
-        return res.json(recipient)
     }
 
     async delete(req, res) {
@@ -135,7 +140,7 @@ class RecipientController {
         }
         await recipient.destroy()
         return res.json({
-            message: `Recipient id ${id} has been deleted`,
+            message: `Recipient ID ${id} has been deleted`,
         })
     }
 }
