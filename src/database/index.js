@@ -1,4 +1,5 @@
 import Sequelize from 'sequelize'
+// import mongoose from 'mongoose'
 
 import User from '../app/models/User'
 import Recipient from '../app/models/Recipient'
