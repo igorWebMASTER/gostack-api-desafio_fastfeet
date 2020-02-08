@@ -6,7 +6,8 @@ import Deliveryman from '../models/Deliveryman'
 import Recipient from '../models/Recipient'
 import File from '../models/File'
 
-import Mail from '../../lib/Mail'
+import RegistrationMail from '../jobs/RegistrationMail'
+import Queue from '../../lib/Queue'
 
 class DeliveryController {
     async store(req, res) {
@@ -28,15 +29,10 @@ class DeliveryController {
             return res.status(400).json({ error: 'Deliveryman not found' })
         }
         const { id, product } = await Delivery.create(req.body)
-        await Mail.sendMail({
-            to: `${deliveryman.name} <${deliveryman.email}>`,
-            subject: 'Nova entrega liberada para você',
-            template: 'registration',
-            context: {
-                deliveryman: deliveryman.name,
-                recipient: recipient.name,
-                product,
-            },
+        await Queue.add(RegistrationMail.key, {
+            deliveryman,
+            recipient,
+            product,
         })
         return res.json({
             id,

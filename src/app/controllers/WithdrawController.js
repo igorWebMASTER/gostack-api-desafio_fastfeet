@@ -101,7 +101,7 @@ class WithdrawController {
                 // end_date: null,
             },
         })
-        if (deliveries.length >= 50) {
+        if (deliveries.length >= 5) {
             return res.status(401).json({
                 error:
                     'Deliveryman already has withdrwan 5 deliveries on the day.',

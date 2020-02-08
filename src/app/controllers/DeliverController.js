@@ -80,6 +80,11 @@ class DeliverController {
                 .status(400)
                 .json({ error: 'This delivery is already closed' })
         }
+        if (!delivery.start_date) {
+            return res
+                .status(400)
+                .json({ error: 'This delivery has not yet been withdrawn' })
+        }
         const { end_date } = req.body
         const parsedDate = parseISO(end_date)
         if (isBefore(parsedDate, delivery.start_date)) {

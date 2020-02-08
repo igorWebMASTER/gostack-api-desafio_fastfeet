@@ -12,6 +12,7 @@ import IndexDeliveredController from './app/controllers/IndexDeliveredController
 import IndexCancelledController from './app/controllers/IndexCancelledController'
 import WithdrawController from './app/controllers/WithdrawController'
 import DeliverController from './app/controllers/DeliverController'
+import DeliveryProblemController from './app/controllers/DeliveryProblemController'
 
 import authMiddleware from './app/middlewares/auth'
 
@@ -33,9 +34,22 @@ routes.put(
     DeliverController.update
 )
 
+// routes.post('/delivery/:delivery_id/problems', DeliveryProblemController.store)
+routes.post(
+    '/deliveryman/:deliveryman_id/delivery/:delivery_id/problems',
+    DeliveryProblemController.store
+)
+
 routes.post('/sessions', SessionController.store)
 
 routes.use(authMiddleware)
+
+routes.get('/problems', DeliveryProblemController.index)
+routes.get('/delivery/:delivery_id/problems', DeliveryProblemController.show)
+routes.get(
+    '/problem/:problem_id/cancel-delivery',
+    DeliveryProblemController.update
+)
 
 routes.post('/recipients', RecipientController.store)
 routes.put('/recipients/:id', RecipientController.update)

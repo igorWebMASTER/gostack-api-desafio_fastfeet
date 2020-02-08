@@ -1,4 +1,4 @@
 export default {
-    secret: '8aaffea99118f27754bfd41be14e788f', // fastfeetbrabao2020
+    secret: process.env.APP_SECRET,
     expiresIn: '7d',
 }
